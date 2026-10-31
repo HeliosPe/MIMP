@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+}
+
+group = 'it.girascamia'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+
+    maven {
+        name = "Gitea"
+        url = uri("https://git.dragonestia.ru/api/packages/Dragonestia/maven")
+        allowInsecureProtocol = true
+
+        credentials(HttpHeaderCredentials) {
+            name = 'Authorization'
+            value = "token ${GiteaToken}"
+        }
+
+        authentication {
+            header(HttpHeaderAuthentication)
+        }
+    }
+    maven { url 'https://jitpack.io/' }
+}
+
+dependencies {
+    compileOnly "org.projectlombok:lombok:1.18.34"
+    annotationProcessor "org.projectlombok:lombok:1.18.34"
+    implementation 'ru.dragonestia.msb3:msb-api:3.0.2'
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
